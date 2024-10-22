@@ -1,26 +1,19 @@
 import requests
-from src.config import BASE_URL, HEADERS, TIMEOUT
-from src.parser import parse_page
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+import time
 
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.config import BASE_URL, HEADERS, TIMEOUT
+url = "https://connectionsgame.org/?game=12-06-2023"
+driver = webdriver.Firefox()
+driver.get(url)
+response = requests.get(url)
+soup = BeautifulSoup(response.content, "html.parser")
 
-def fetch_page(url):
-    try:
-        response = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
-        response.raise_for_status()  # Raise HTTPError for bad responses
-        return response.text
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching {url}: {e}")
-        return None
-
-def scrape():
-    html_content = fetch_page(BASE_URL)
-    if html_content:
-        parse_page(html_content)
-
-if __name__ == "__main__":
-    scrape()
+for i in range(4):
+    connection = False
+    while connection == False:
+        tiles = soup.find_all('div', class_='word')
+        for i in range(16):
+            
