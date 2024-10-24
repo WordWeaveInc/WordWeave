@@ -1,19 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./App.css";
-import TestComp from "./test";
-import GridComp from "./Grid";
-import DarkModeToggle from "./DarkModeToggle";
 
 function App() {
+  const [words, setWords] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/random-words")
+      .then((response) => {
+        setWords(response.data.words);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the words!", error);
+      });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        <h1>WordWeave!</h1>
-        <DarkModeToggle />
+        <h1>Connections Web App</h1>
       </header>
-      <main className="App-main">
-        <TestComp />
-        <GridComp />
+      <main>
+        <h2>Random Words</h2>
+        <ul>
+          {words.map((word, index) => (
+            <li key={index}>{word}</li>
+          ))}
+        </ul>
       </main>
       <footer>{/* Add your footer content here */}</footer>
     </div>
