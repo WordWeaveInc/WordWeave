@@ -1,7 +1,7 @@
 .App {
   text-align: center;
 }
-
+/* Tailwind or bootstrap */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -74,3 +74,59 @@ body.dark-mode .grid-cell {
 body.dark-mode .grid-cell:hover {
   background-color: #444;
 }
+
+.grid-wrapper {
+  position: relative;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns as needed */
+  gap: 10px;
+  padding: 20px;
+}
+
+.grid-row {
+  display: contents; /* Ensures the rows are displayed correctly in the grid */
+}
+
+.grid-cell {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.grid-cell.selected {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.shuffle-button {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.shuffle-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* .connection-banner {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  margin-top: 20px;
+  z-index: 1;
+} */

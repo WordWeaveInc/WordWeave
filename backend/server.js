@@ -16,10 +16,10 @@ const db = new sqlite3.Database("wordWeave.db", (err) => {
   }
 });
 
-// API endpoint to fetch 4 random words
+// API endpoint to fetch 4 random connections and their words
 app.get("/api/random-words", (req, res) => {
   db.all(
-    "SELECT word1, word2, word3, word4 FROM connections",
+    "SELECT word1, word2, word3, word4 FROM connections ORDER BY RANDOM() LIMIT 4",
     [],
     (err, rows) => {
       if (err) {
@@ -36,10 +36,30 @@ app.get("/api/random-words", (req, res) => {
       // Flatten the list of tuples into a single list of words
       const words = rows.flatMap((row) => Object.values(row));
 
-      // Select 4 random words
-      const randomWords = words.sort(() => 0.5 - Math.random()).slice(0, 4);
+      res.json({ words });
+    }
+  );
+});
 
-      res.json({ words: randomWords });
+// API endpoint to check if selected words share a connection
+app.post("/api/check-connection", express.json(), (req, res) => {
+  const { selectedWords } = req.body;
+
+  db.get(
+    "SELECT connection FROM connections WHERE word1 IN (?, ?, ?, ?) AND word2 IN (?, ?, ?, ?) AND word3 IN (?, ?, ?, ?) AND word4 IN (?, ?, ?, ?)",
+    [...selectedWords, ...selectedWords, ...selectedWords, ...selectedWords],
+    (err, row) => {
+      if (err) {
+        console.error("Error checking connection in database", err);
+        res.status(500).json({ error: err.message });
+        return;
+      }
+
+      if (row) {
+        res.json({ isConnected: true, connection: row.connection });
+      } else {
+        res.json({ isConnected: false });
+      }
     }
   );
 });
