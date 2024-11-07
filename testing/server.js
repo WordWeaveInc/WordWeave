@@ -1,27 +1,21 @@
-// Import required modules
 const express = require('express');
 const cors = require('cors');
 const Groq = require('groq-sdk');
 
-// Initialize the Express app and define the port
 const app = express();
 const port = 5500;
 
-// Middleware to handle CORS and JSON requests
 app.use(cors());
 app.use(express.json());
 
-// Initialize the Groq API client (replace with your actual API key)
 const groq = new Groq({ apiKey: "YOUR_GROQ_API_KEY" });
 
-// Route to test server connection
 app.get('/test', (req, res) => {
     res.send("GET request received on /test");
 });
 
-// Route to handle chat requests
 app.post('/chat', async (req, res) => {
-    console.log('Received message:', req.body.message); // Log incoming message
+    console.log('Received message:', req.body.message);
     try {
         const chatCompletion = await groq.chat.completions.create({
             "messages": [
@@ -34,15 +28,14 @@ app.post('/chat', async (req, res) => {
             "stream": false
         });
 
-        console.log('Groq response:', chatCompletion); // Log Groq API response
+        console.log('Groq response:', chatCompletion);
         res.send(chatCompletion.choices[0].message.content);
     } catch (error) {
-        console.error('Error:', error); // Log any errors
+        console.error('Error:', error);
         res.status(500).send('Error communicating with Groq API');
     }
 });
 
-// Start the server
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
