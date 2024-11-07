@@ -1,0 +1,40 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Groq Chat Interface</title>
+</head>
+<body>
+  <h1>Ask Groq</h1>
+  <textarea id="user-input" rows="4" cols="50" placeholder="Type your question..."></textarea><br>
+  <button onclick="sendMessage()">Send</button>
+  <h2>Response:</h2>
+  <pre id="response"></pre>
+
+  <script>
+    async function sendMessage() {
+      const userInput = document.getElementById("user-input").value;
+      const responseElement = document.getElementById("response");
+      responseElement.textContent = "Loading...";
+
+      try {
+        const response = await fetch('http://localhost:5500/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: userInput })
+            });
+
+
+        const data = await response.text();
+        responseElement.textContent = data;
+      } catch (error) {
+        responseElement.textContent = "Error: " + error.message;
+      }
+    }
+  </script>
+</body>
+</html>
