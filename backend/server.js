@@ -6,7 +6,8 @@ const cors = require("cors");
 const {generatePuzzle} = require("./puzzleGenerator")
 
 const app = express();
-const port = 5000;
+const port = 5000; // WINDOWS HOSTING PORT
+// const port = 8080; // UNIX HOSTING PORT
 
 app.use(cors());
 
