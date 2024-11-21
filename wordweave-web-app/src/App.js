@@ -9,55 +9,64 @@ function App() {
   const [currPuzzle, setCurrPuzzle] = useState(undefined);
   const [currPuzzleID, setCurrPuzzleID] = useState(undefined);
   const [currAnswer, setCurrAnswer] = useState(undefined);
-  const [selectedWords, setSelectedWords] = useState([])
-  const [savedGames, setSavedGames] = useState(getPuzzleIDs())
+  const [selectedWords, setSelectedWords] = useState([]);
+  const [savedGames, setSavedGames] = useState(getPuzzleIDs());
+  const [guesses, setGuesses] = useState([])
+  const [life, setLife] = useState(5)
+  const [words, setWords] = useState([])
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/generatePuzzle")
+    axios
+      // .get("http://localhost:8080/api/generatePuzzle")
+      .get("http://localhost:5000/api/generatePuzzle")
       .then((response) => {
-        const puzzleData = response.data.puzzle
-        handlePuzzleGenerate(puzzleData)
+        const puzzleData = response.data.puzzle;
+        handlePuzzleGenerate(puzzleData);
+        console.log(puzzleData);
       })
       .catch((error) => {
-        console.error("error generating puzzle", error)
-      })
-  }, [])
+        console.error("error generating puzzle", error);
+      });
+  }, []);
 
   function handlePuzzleSave() {
-    setPuzzle(currPuzzleID, currPuzzle)
-    setSavedGames(getPuzzleIDs())
+    setPuzzle(currPuzzleID, currPuzzle);
+    setSavedGames(getPuzzleIDs());
   }
 
   function handlePuzzleDelete() {
-    deletePuzzle(currPuzzleID)
-    setSavedGames(getPuzzleIDs())
+    deletePuzzle(currPuzzleID);
+    setSavedGames(getPuzzleIDs());
   }
 
   function handleSavedGameClick(gameID) {
-    setCurrPuzzleID(gameID)
-    setCurrPuzzle(getPuzzle(gameID))
-    setSelectedWords([])
+    const savedGame = getPuzzle(gameID)
+    setCurrPuzzleID(gameID);
+    setCurrPuzzle(savedGame);
+    setSelectedWords([]);
+    setGuesses([])
+    setLife(5)
+    setWords(shuffle(savedGame.unique_words))
   }
-  
 
   function handlePuzzleGenerate(puzzleData) {
-    const puzzleID = Math.random().toString(36).substring(2, 9)
-    setCurrPuzzle(puzzleData)
-    setCurrPuzzleID(puzzleID)
+    const puzzleID = Math.random().toString(36).substring(2, 9);
+    setCurrPuzzle(puzzleData);
+    setCurrPuzzleID(puzzleID);
+    setGuesses([])
+    setLife(5)
+    setWords(shuffle(puzzleData.unique_words))
   }
 
-
-  const shuffle = (array) => {
+  function shuffle(arr) {
+    const array = [...arr]
     let currentIndex = array.length,
       randomIndex;
 
-    // While there remain elements to shuffle...
     while (currentIndex !== 0) {
-      // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
 
-      // And swap it with the current element.
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex],
         array[currentIndex],
@@ -67,58 +76,43 @@ function App() {
     return array;
   };
 
-  const handleShuffleClick = () => {
-    // setWords(shuffle([...words])); // Shuffle a copy of the words array
+  function handleShuffleClick() {
+    setWords(shuffle(words)); // Shuffle a copy of the words array
   };
 
-  const handleWordClick = (word) => {
-    // if (gameOver) return;
 
-    // let newSelectedWords;
-    // if (selectedWords.includes(word)) {
-    //   newSelectedWords = selectedWords.filter((w) => w !== word);
-    // } else {
-    //   newSelectedWords = [...selectedWords, word];
-    // }
+  function isCorrectGuess(selected) {
+    const clues = currPuzzle.clues
+    return clues.some(clue => {
+      const correctWords = clue.words.map(word => word.toLowerCase())
+      return selected.every(word => {
+        return correctWords.includes(word.toLowerCase())
+      })
+    })
+  }
 
-    // setSelectedWords(newSelectedWords);
+  function handleSubmit() {
+    if (selectedWords.length === 4) {
+      if (isCorrectGuess(selectedWords)) {
+        setSelectedWords([])
+        setGuesses(oldGuesses => ([...oldGuesses, selectedWords])) 
+        return 
+      }
+      setLife(oldLife => (oldLife - 1)) 
+    }
+  }
 
-    // if (newSelectedWords.length === 4) {
-    //   checkConnection(newSelectedWords);
-    // }
-  };
+  function handleWordClick(word) {
+    if (selectedWords.includes(word)){
+      setSelectedWords(oldWords => (oldWords.filter(oldWord => (oldWord !== word))))
+      return
+    }
 
-  const checkConnection = (selectedWords) => {
-    // axios
-    //   .post("http://localhost:5000/api/check-connection", { selectedWords })
-    //   .then((response) => {
-    //     const { isConnected, connection } = response.data;
+    if (selectedWords.length === 4) {
+      return
+    }
 
-    //     if (isConnected) {
-    //       // Remove the connected words from the game
-    //       const remainingWords = words.filter(
-    //         (word) => !selectedWords.includes(word)
-    //       );
-    //       setWords(remainingWords);
-    //       setConnectionName(connection);
-    //       setConnectedWords(selectedWords);
-
-    //       // Find the row of the first connected word
-    //       const firstWordIndex = words.indexOf(selectedWords[0]);
-    //       const row = Math.floor(firstWordIndex / 4);
-    //       setConnectedRow(row);
-    //     } else {
-    //       setMistakes(mistakes + 1);
-    //       if (mistakes + 1 >= 4) {
-    //         setGameOver(true);
-    //       }
-    //     }
-
-    //     setSelectedWords([]);
-    //   })
-    //   .catch((error) => {
-    //     console.error("There was an error checking the connection!", error);
-    //   });
+    setSelectedWords(oldWords => ([...oldWords, word]))
   };
 
   return (
@@ -129,47 +123,37 @@ function App() {
       </header>
 
       <main>
-        {
-          currPuzzle &&
-          (
-            <>
-              <h2>Random Words</h2>
-              <div className="grid-wrapper">
-                <GridComp
-                  words={currPuzzle.unique_words}
-                  selectedWords={selectedWords}
-                  onWordClick={handleWordClick}
-                />
-                {/* {connectedRow !== null && (
-                  <div
-                    className="connection-banner"
-                    style={{ top: `${connectedRow * 100}px` }}
-                  >
-                    <h3>Connection Found: {connectionName}</h3>
-                    <p>Words: {connectedWords.join(", ")}</p>
-                  </div>
-                )} */}
-              </div>
-              <button className="shuffle-button" onClick={handleShuffleClick}>
-                Shuffle Words
-              </button>
-              <button className="save-button" onClick={handlePuzzleSave}>
-                Save Puzzle
-              </button>
-              <button className="delete-button" onClick={handlePuzzleDelete}>
-                Delete Puzzle
-              </button>
-              {/* <div>Mistakes: {mistakes} / 4</div>
-              {gameOver && <div>Game Over</div>} */}
-            </>
-          )
-        }
+        {currPuzzle && (
+          <>
+            <h2>Random Words</h2>
+            <div className="grid-wrapper">
+              <GridComp
+                words={words}
+                selectedWords={selectedWords}
+                onWordClick={handleWordClick}
+                correctGuesses={guesses}
+              />
+            </div>
+            <button className="shuffle-button" onClick={handleShuffleClick}>
+              Shuffle Words
+            </button>
+            <button className="save-button" onClick={handlePuzzleSave}>
+              Save Puzzle
+            </button>
+            <button className="delete-button" onClick={handlePuzzleDelete}>
+              Delete Puzzle
+            </button>
+            <button className="submit-button" onClick={handleSubmit}>
+              Submit
+            </button>
+          </>
+        )}
         <div className="saved-games">
-          {
-            savedGames.map((gameID, index) => (
-              <button onClick={() => handleSavedGameClick(gameID)}>{index+1}</button>
-            ))
-          }
+          {savedGames.map((gameID, index) => (
+            <button onClick={() => handleSavedGameClick(gameID)} key={index}>
+              {index + 1}
+            </button>
+          ))}
         </div>
       </main>
       <footer>{/* Add your footer content here */}</footer>
