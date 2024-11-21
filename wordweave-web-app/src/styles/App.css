@@ -81,7 +81,10 @@ body.dark-mode .grid-cell:hover {
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns as needed */
+  grid-template-columns: repeat(
+    4,
+    1fr
+  ); /* Adjust the number of columns as needed */
   gap: 10px;
   padding: 20px;
 }
@@ -102,6 +105,21 @@ body.dark-mode .grid-cell:hover {
 .grid-cell.selected {
   background-color: #d4edda;
   color: #155724;
+}
+
+.grid-cell.guessed {
+  background-color: #d5b8f0;
+  color: #2a083b;
+}
+
+body.dark-mode .grid-cell.selected {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+body.dark-mode .grid-cell.guessed {
+  background-color: #d5b8f0;
+  color: #2a083b;
 }
 
 .shuffle-button {
