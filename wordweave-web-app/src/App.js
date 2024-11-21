@@ -17,8 +17,8 @@ function App() {
 
   useEffect(() => {
     axios
-      // .get("http://localhost:8080/api/generatePuzzle")
-      .get("http://localhost:5000/api/generatePuzzle")
+      // .get("http://localhost:8080/api/generatePuzzle") // UNIX HOSTING PORT
+      .get("http://localhost:5000/api/generatePuzzle")    // WINDOWS HOSTING PORT
       .then((response) => {
         const puzzleData = response.data.puzzle;
         handlePuzzleGenerate(puzzleData);
