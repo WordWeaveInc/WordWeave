@@ -17,11 +17,12 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/generatePuzzle")
+      // .get("http://localhost:8080/api/generatePuzzle")
+      .get("http://localhost:5000/api/generatePuzzle")
       .then((response) => {
         const puzzleData = response.data.puzzle;
         handlePuzzleGenerate(puzzleData);
-        console.log(puzzleData)
+        console.log(puzzleData);
       })
       .catch((error) => {
         console.error("error generating puzzle", error);
