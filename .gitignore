@@ -1,3 +1,4 @@
 .env
 test.session.sql
 .pytest_cache
+.DS_Store

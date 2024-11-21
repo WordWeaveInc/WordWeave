@@ -104,6 +104,11 @@ body.dark-mode .grid-cell:hover {
   color: #155724;
 }
 
+.grid-cell.guessed {
+  background-color: #d5b8f0;
+  color: #2a083b;
+}
+
 .shuffle-button {
   background-color: #f0f0f0;
   padding: 20px;
