@@ -13,7 +13,7 @@ function App() {
   const [savedGames, setSavedGames] = useState(getPuzzleIDs())
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/generatePuzzle")
+    axios.get("http://localhost:5000/api/generatePuzzle")
       .then((response) => {
         const puzzleData = response.data.puzzle
         handlePuzzleGenerate(puzzleData)
