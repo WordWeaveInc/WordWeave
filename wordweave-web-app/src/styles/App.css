@@ -122,7 +122,7 @@ body.dark-mode .grid-cell.guessed {
   color: #2a083b;
 }
 
-.shuffle-button {
+/* .shuffle-button {
   background-color: #f0f0f0;
   padding: 20px;
   border: 1px solid #ccc;
@@ -134,8 +134,70 @@ body.dark-mode .grid-cell.guessed {
 
 .shuffle-button:hover {
   background-color: #e0e0e0;
+} */
+
+.submit-button {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-right: 10px;
 }
 
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+.save-button {
+  background-color: #28a745;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.shuffle-button {
+  background-color: #f0f0f0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.shuffle-button:hover {
+  background-color: #e0e0e0;
+}
+
+.saved-games {
+  margin-top: 10px;
+}
 /* .connection-banner {
   position: absolute;
   left: 0;
