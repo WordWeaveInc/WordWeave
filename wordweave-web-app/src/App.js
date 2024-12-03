@@ -17,8 +17,8 @@ function App() {
 
   useEffect(() => {
     axios
-      // .get("http://localhost:8080/api/generatePuzzle")
-      .get("http://localhost:5000/api/generatePuzzle")
+      .get("http://localhost:8080/api/generatePuzzle") // UNIX HOSTING PORT
+      //.get("http://localhost:5000/api/generatePuzzle")    // WINDOWS HOSTING PORT
       .then((response) => {
         const puzzleData = response.data.puzzle;
         handlePuzzleGenerate(puzzleData);
@@ -46,7 +46,13 @@ function App() {
     setSelectedWords([]);
     setGuesses([])
     setLife(5)
-    setWords(shuffle(savedGame.unique_words))
+    setWords(shuffle(getPuzzleWords(savedGame)))
+  }
+
+  function getPuzzleWords(puzzle) {
+    return puzzle.clues.reduce((prev, clue) => {
+      return [...prev, ...clue.words.map(word => (word.toUpperCase()))]
+    }, [])
   }
 
   function handlePuzzleGenerate(puzzleData) {
@@ -55,7 +61,7 @@ function App() {
     setCurrPuzzleID(puzzleID);
     setGuesses([])
     setLife(5)
-    setWords(shuffle(puzzleData.unique_words))
+    setWords(shuffle(getPuzzleWords(puzzleData)))
   }
 
   function shuffle(arr) {
