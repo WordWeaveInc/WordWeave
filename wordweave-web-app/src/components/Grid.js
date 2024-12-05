@@ -31,6 +31,8 @@ const GridComp = ({ words, selectedWords, onWordClick, correctGuesses, isWrongGu
 
   const renderGrid = () => {
     const grid = [];
+
+    // Render guessed words (those that are correct)
     grid.push(correctGuesses.map((guess, row) => {
       const cols = guess.map((word, col) => {
         return getCell(row, col, word, "guessed");
@@ -43,14 +45,18 @@ const GridComp = ({ words, selectedWords, onWordClick, correctGuesses, isWrongGu
       );
     }));
 
-    const remainingWords = words.reduce((prev, word) => {
-      if (prev.length && prev[prev.length - 1].length < 4) {
-        prev[prev.length - 1].push(word);
-        return prev;
-      }
-      return [...prev, [word]];
-    }, []);
+    // Filter out correct guesses from remaining words
+    const remainingWords = words
+      .filter(word => !correctGuesses.flat().includes(word)) // Remove guessed words
+      .reduce((prev, word) => {
+        if (prev.length && prev[prev.length - 1].length < 4) {
+          prev[prev.length - 1].push(word);
+          return prev;
+        }
+        return [...prev, [word]];
+      }, []);
 
+    // Render remaining words that have not been guessed
     grid.push(remainingWords.map((section, row) => {
       const cols = section.map((word, col) => {
         const isSelected = selectedWords.includes(word);
