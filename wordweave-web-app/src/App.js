@@ -19,11 +19,12 @@ function App() {
   const [guesses, setGuesses] = useState([]);
   const [life, setLife] = useState(5);
   const [words, setWords] = useState([]);
+  const [isWrongGuess, setIsWrongGuess] = useState(false);
 
   useEffect(() => {
     axios
-      //.get("http://localhost:8080/api/generatePuzzle") // UNIX HOSTING PORT
-      .get("http://localhost:5000/api/generatePuzzle") // WINDOWS HOSTING PORT
+      .get("http://localhost:8080/api/generatePuzzle") // UNIX HOSTING PORT
+      //.get("http://localhost:5000/api/generatePuzzle") // WINDOWS HOSTING PORT
       .then((response) => {
         const puzzleData = response.data.puzzle;
         handlePuzzleGenerate(puzzleData);
@@ -102,6 +103,10 @@ function App() {
   }
 
   function handleSubmit() {
+    if (life <= 0) {
+      alert("Game Over! You've run out of lives.");
+      return;
+    }
     if (selectedWords.length === 4) {
       if (isCorrectGuess(selectedWords)) {
         setSelectedWords([]);
@@ -109,6 +114,13 @@ function App() {
         return;
       }
       setLife((oldLife) => oldLife - 1);
+      setIsWrongGuess(true); 
+
+      if (life - 1 <= 0) {
+        alert("Game Over! You've run out of lives.");
+      }
+
+      setTimeout(() => setIsWrongGuess(false), 500);
     }
   }
 
@@ -137,13 +149,14 @@ function App() {
       <main>
         {currPuzzle && (
           <>
-            <h2>Random Words</h2>
+            <h2>Lives Remaining: {life}</h2>
             <div className="grid-wrapper">
               <GridComp
                 words={words}
                 selectedWords={selectedWords}
                 onWordClick={handleWordClick}
                 correctGuesses={guesses}
+                isWrongGuess={isWrongGuess}
               />
             </div>
             <button className="shuffle-button" onClick={handleShuffleClick}>
