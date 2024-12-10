@@ -23,8 +23,8 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/generatePuzzle") // UNIX HOSTING PORT
-      //.get("http://localhost:5000/api/generatePuzzle") // WINDOWS HOSTING PORT
+      // .get("http://localhost:8080/api/generatePuzzle") // UNIX HOSTING PORT
+      .get("http://localhost:5000/api/generatePuzzle") // WINDOWS HOSTING PORT
       .then((response) => {
         const puzzleData = response.data.puzzle;
         handlePuzzleGenerate(puzzleData);
@@ -114,7 +114,7 @@ function App() {
         return;
       }
       setLife((oldLife) => oldLife - 1);
-      setIsWrongGuess(true); 
+      setIsWrongGuess(true);
 
       if (life - 1 <= 0) {
         alert("Game Over! You've run out of lives.");
