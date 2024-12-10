@@ -149,7 +149,10 @@ function App() {
       <main>
         {currPuzzle && (
           <>
-            <h2>Lives Remaining: {life}</h2>
+            <div className="lives-remaining">
+              <h2>Lives Remaining: {life}</h2>
+            </div>
+
             <div className="grid-wrapper">
               <GridComp
                 words={words}
