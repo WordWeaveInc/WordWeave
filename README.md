@@ -1,61 +1,42 @@
-# Word Weave Connection Game
+# Word Weave - Connection Game
 
-## 1. Project Overview
+## Project Overview
 
-- **Game Title**: Word Weave
-- **Purpose**: A word connection game inspired by Connections New York. Players connect words based on relationships such as meaning, category, or language roots. The goal is to challenge players' vocabulary and word association skills.
-- **Target Audience**: Puzzle enthusiasts, word game lovers, and language learners.
+**Word Weave** is a connection game where players find and link four related words in a grid. It’s designed to challenge logical thinking and word association skills.
 
-## 2. Core Features
+## Core Features
 
-- **Game Type**: Single-player, with the option for multiple playthroughs per day.
-- **Gameplay Mechanics**:
-  - **Daily Puzzle Generation**: New puzzles generated each playthrough.
-  - **Word Connections**: Players connect sets of words based on relationships like synonyms, categories, or antonyms.
-  - **Shuffle Words**: Players can shuffle the list of words to help form connections.
-  - **Multiple Playthroughs**: The ability to play more than once per day.
+- **Daily Puzzles**: A new puzzle every day.
+- **Word Connections**: Click or highlight four related words to form a connection.
+- **Shuffle Words**: Reorganize the grid for a fresh perspective.
+- **Leaderboard**: Compete with players worldwide.
+- **Multiple Difficulty Levels**: Suitable for all skill levels.
 
-## 3. Languages Supported
+## Gameplay
 
-- **Language Support**: You can expand to multilingual connections if desired.
+Players find and connect four related words by clicking or highlighting them in a grid.
 
-## 4. User Interface (UI) and Design
+## Technology Stack
 
- **Puzzle Screen**:
-  - **Grid Layout**: Words displayed in a grid for players to connect.
-  - **Shuffle Button**: Reorganizes the grid of words.
-  
-- **Theme**: Clean, responsive UI with animations for correct and incorrect word connections.
+- **Frontend**: HTML, CSS, JavaScript.
+- **Backend**: Python, JavaScript.
+- **API Integration**: Groq Cloud API for random word generation.
 
-## 5. Functionality
+## Team Responsibilities
 
-- **Word Matching System**: Players connect groups of words by relationship.
-- **Replayability**: Players can play multiple puzzles each day.
+- **Frontend**: Built the UI and interactive grid.
+- **Backend**: Managed game logic and leaderboard.
+- **API Integration**: Integrated the Groq Cloud API for generating words.
+- **Testing**: Ensured smooth gameplay across devices.
 
-## 6. Technology Stack
+## Testing
 
-- **Front-End**:
-  - **HTML/CSS**: For building the structure and design of the web pages.
-  - **JavaScript**: For interactive gameplay features (shuffling words, timer, etc.).
-  - **React/Angular**: React for component-based UI and Angular for additional frontend logic and data binding.
-- **Back-End**:
-  - **Python**: For game logic and possibly puzzle generation.
-  - **SQL**: For storing leaderboard data, user scores, and game progress.
-- **APIs**: If needed, for storing and retrieving data from the database or game server.
+- **Unit Testing**: Validated word connections and API functionality.
+- **User Feedback**: Used to refine gameplay and UI.
 
-## 7. Collaboration and Group Responsibilities
+## Timeline
 
-- **Team Roles**:
-  - Front-End Development: UI, user experience, and React/Angular integration.
-  - Back-End Development: Puzzle generation, leaderboard, and game logic.
-  - Database Management: Handling SQL queries and storing/retrieving user data.
-  - Testing: Ensure functionality works across devices and browsers.
-
-## 8. Testing and Feedback
-
-- **Test Phases**: Unit testing for puzzle mechanics and database connections, user testing for feedback on UI/UX.
-- **User Feedback**: Incorporate suggestions from testers to refine gameplay.
-
-## 9. Timeline
-
-- **Milestones**: Initial prototype, integration of all functionalities, testing, and final release.
+1. Develop prototype.
+2. Add core features.
+3. Test and refine.
+4. Final release.
