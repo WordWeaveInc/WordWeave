@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'; 
+// import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'; 
 import './styles/index.css';
 import App from './App';
-import Homepage from './Homepage';
-import About from './About';
+// import Homepage from './Homepage';
+// import About from './About';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +13,7 @@ root.render(
   </React.StrictMode>
 );
 
+// ROUTER CODE (commented out for now)
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(
 //   <React.StrictMode>
