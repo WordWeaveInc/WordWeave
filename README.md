@@ -9,7 +9,6 @@
 - **Daily Puzzles**: A new puzzle every day.
 - **Word Connections**: Click or highlight four related words to form a connection.
 - **Shuffle Words**: Reorganize the grid for a fresh perspective.
-- **Leaderboard**: Compete with players worldwide.
 - **Multiple Difficulty Levels**: Suitable for all skill levels.
 
 ## Gameplay
